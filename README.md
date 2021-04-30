@@ -2,7 +2,22 @@
 
 > Aquarius - Enabling Fast, Scalable, Data-Driven Virtual Network Functions
 > 
-> **NOTE**: We are currently going through the open-source process required by our institution. The content will soon be available.
+> **NOTE**: We are currently going through the open-source process required by our institution. The content will soon be available. The steps that need to be completed are listed below:
+
+- [x] PREPARE
+- [x] INCLUSIVELINT
+- [x] UNITTEST
+- [x] LINT
+- [x] BUILD & PUBLISH
+- [x] CORONA
+- [x] BLACKDUCK
+- [ ] SONARQUBE
+- [ ] HELM
+- [ ] DEPLOY
+- [ ] DEPLOY-STATIC
+- [ ] E2E
+- [ ] APIDOCS
+- [ ] GOPUBLISH
 
 
 
