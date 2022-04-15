@@ -1,0 +1,878 @@
+{
+    "global": {
+        "path": {
+            "root": "/home/yzy/aquarius",
+            "config": "/home/yzy/aquarius/config",
+            "src": "/home/yzy/aquarius/src",
+            "vpp": "/home/yzy/aquarius/data/vpp_deb",
+            "img": "/home/yzy/aquarius/data/img",
+            "tmp": "/home/yzy/aquarius/data/tmp",
+            "trace": "/home/yzy/aquarius/data/trace",
+            "orig_img": "/home/yzy/aquarius/data/img/origin/lb-vpp.img",
+            "base_img": "/home/yzy/aquarius/data/img/lb-vpp-base.img"
+        },
+        "topo": {
+            "n_node": {
+                "clt": 1,
+                "er": 1,
+                "lb": 2,
+                "as": 48
+            },
+            "n_vcpu": {
+                "clt": [
+                    4
+                ],
+                "er": [
+                    2
+                ],
+                "lb": [
+                    2,
+                    2
+                ],
+                "as": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4
+                ]
+            },
+            "physical_server_id": {
+                "clt": [
+                    0
+                ],
+                "er": [
+                    0
+                ],
+                "lb": [
+                    1,
+                    1
+                ],
+                "as": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3
+                ]
+            },
+            "thread_per_cpu": 2,
+            "n_cpu": 24,
+            "n_server": 4,
+            "compact": false,
+            "vcpu_list": {
+                "clt": [
+                    [
+                        0,
+                        24,
+                        1,
+                        25,
+                        2,
+                        26,
+                        3,
+                        27
+                    ]
+                ],
+                "er": [
+                    [
+                        4,
+                        28,
+                        5,
+                        29
+                    ]
+                ],
+                "lb": [
+                    [
+                        0,
+                        24,
+                        1,
+                        25
+                    ],
+                    [
+                        2,
+                        26,
+                        3,
+                        27
+                    ]
+                ],
+                "as": [
+                    [
+                        6,
+                        30
+                    ],
+                    [
+                        7,
+                        31
+                    ],
+                    [
+                        8,
+                        32
+                    ],
+                    [
+                        9,
+                        33
+                    ],
+                    [
+                        10,
+                        34
+                    ],
+                    [
+                        11,
+                        35
+                    ],
+                    [
+                        12,
+                        36
+                    ],
+                    [
+                        13,
+                        37
+                    ],
+                    [
+                        14,
+                        38
+                    ],
+                    [
+                        15,
+                        39
+                    ],
+                    [
+                        16,
+                        40
+                    ],
+                    [
+                        17,
+                        41
+                    ],
+                    [
+                        18,
+                        42
+                    ],
+                    [
+                        19,
+                        43
+                    ],
+                    [
+                        20,
+                        44
+                    ],
+                    [
+                        21,
+                        45
+                    ],
+                    [
+                        22,
+                        46
+                    ],
+                    [
+                        23,
+                        47
+                    ],
+                    [
+                        4,
+                        28
+                    ],
+                    [
+                        5,
+                        29
+                    ],
+                    [
+                        6,
+                        30
+                    ],
+                    [
+                        7,
+                        31
+                    ],
+                    [
+                        8,
+                        32
+                    ],
+                    [
+                        9,
+                        33
+                    ],
+                    [
+                        10,
+                        34
+                    ],
+                    [
+                        11,
+                        35
+                    ],
+                    [
+                        12,
+                        36
+                    ],
+                    [
+                        13,
+                        37
+                    ],
+                    [
+                        14,
+                        38
+                    ],
+                    [
+                        15,
+                        39
+                    ],
+                    [
+                        16,
+                        40
+                    ],
+                    [
+                        17,
+                        41
+                    ],
+                    [
+                        18,
+                        42
+                    ],
+                    [
+                        19,
+                        43
+                    ],
+                    [
+                        20,
+                        44
+                    ],
+                    [
+                        21,
+                        45
+                    ],
+                    [
+                        0,
+                        24,
+                        1,
+                        25,
+                        2,
+                        26,
+                        3,
+                        27
+                    ],
+                    [
+                        4,
+                        28,
+                        5,
+                        29,
+                        6,
+                        30,
+                        7,
+                        31
+                    ],
+                    [
+                        8,
+                        32,
+                        9,
+                        33,
+                        10,
+                        34,
+                        11,
+                        35
+                    ],
+                    [
+                        12,
+                        36,
+                        13,
+                        37,
+                        14,
+                        38,
+                        15,
+                        39
+                    ],
+                    [
+                        16,
+                        40,
+                        17,
+                        41,
+                        18,
+                        42,
+                        19,
+                        43
+                    ],
+                    [
+                        20,
+                        44,
+                        21,
+                        45,
+                        22,
+                        46,
+                        23,
+                        47
+                    ],
+                    [
+                        0,
+                        24,
+                        1,
+                        25,
+                        2,
+                        26,
+                        3,
+                        27
+                    ],
+                    [
+                        4,
+                        28,
+                        5,
+                        29,
+                        6,
+                        30,
+                        7,
+                        31
+                    ],
+                    [
+                        8,
+                        32,
+                        9,
+                        33,
+                        10,
+                        34,
+                        11,
+                        35
+                    ],
+                    [
+                        12,
+                        36,
+                        13,
+                        37,
+                        14,
+                        38,
+                        15,
+                        39
+                    ],
+                    [
+                        16,
+                        40,
+                        17,
+                        41,
+                        18,
+                        42,
+                        19,
+                        43
+                    ],
+                    [
+                        20,
+                        44,
+                        21,
+                        45,
+                        22,
+                        46,
+                        23,
+                        47
+                    ]
+                ]
+            },
+            "n_clt": 1,
+            "n_er": 1,
+            "n_lb": 2,
+            "n_as": 48
+        },
+        "net": {
+            "as4_vip": "2.2.2.2",
+            "as6_vip": "dead::cafe",
+            "lb4_vip_fmt": "3.3.{}.1",
+            "lb6_vip_fmt": "dead:{:04x}::beef",
+            "br4_fmt": "192.168.0.{}",
+            "br6_fmt": "dcb6::{:04x}",
+            "tap4_fmt": "10.0.0.{}",
+            "tap6_fmt": "dc1b::{:04x}",
+            "clt4_fmt": "10.1.0.{}",
+            "clt6_fmt": "c12e::{:04x}",
+            "l2_fmt": "de:ad:be:ef:{}:{:02x}",
+            "mgmt_fmt": "10.0.1.{}",
+            "lb_mgmt_port": 8900,
+            "as_mgmt_port": 9000,
+            "er_mgmt_port": 8850,
+            "clt_mgmt_port": 8800,
+            "bridge": "bryzy",
+            "mgmt_bridge": "bryzymgmt",
+            "vlan_if": "enp7s0",
+            "vlan_id": 0,
+            "vlan_mgmt_id": 1566,
+            "physical_server_ip": [
+                "kvmp-2",
+                "kvmp-3",
+                "v6dc-2",
+                "v6dc-3"
+            ],
+            "base_ip": "kvmp-3"
+        }
+    },
+    "nodes": {
+        "clt": [],
+        "er": [],
+        "lb": [],
+        "as": [
+            {
+                "id": 36,
+                "node_type": "as",
+                "hostname": "node_server_36",
+                "isvpp": false,
+                "ssh_port": 9036,
+                "mgmt_ip": "10.0.1.37",
+                "l2_list": [
+                    "de:ad:ca:fe:b4:52",
+                    "de:ad:be:ef:52:24"
+                ],
+                "tap_list": [
+                    "asmgmt36",
+                    "asvpp36"
+                ],
+                "ip4_list": [
+                    "10.0.0.37"
+                ],
+                "ip6_list": [
+                    "dc1b::0025"
+                ],
+                "sn4_list": [
+                    24
+                ],
+                "sn6_list": [
+                    64
+                ],
+                "img": "/home/yzy/aquarius/data/img/node_server_36.img",
+                "vcpu_list": [
+                    0,
+                    24,
+                    1,
+                    25,
+                    2,
+                    26,
+                    3,
+                    27
+                ],
+                "physical_server_id": 2,
+                "physical_server_ip": "v6dc-2",
+                "lb_list": [
+                    0,
+                    1
+                ],
+                "lb_ip4_list": [
+                    "10.0.0.253",
+                    "10.0.0.252"
+                ],
+                "lb_ip6_list": [
+                    "dc1b::fffe",
+                    "dc1b::fffd"
+                ],
+                "clt_list": [
+                    0
+                ],
+                "clt_ip4_list": [
+                    "10.1.0.1"
+                ],
+                "clt_ip6_list": [
+                    "c12e::0001"
+                ],
+                "vip4": "2.2.2.2",
+                "vip6": "dead::cafe"
+            },
+            {
+                "id": 37,
+                "node_type": "as",
+                "hostname": "node_server_37",
+                "isvpp": false,
+                "ssh_port": 9037,
+                "mgmt_ip": "10.0.1.38",
+                "l2_list": [
+                    "de:ad:ca:fe:98:3d",
+                    "de:ad:be:ef:52:25"
+                ],
+                "tap_list": [
+                    "asmgmt37",
+                    "asvpp37"
+                ],
+                "ip4_list": [
+                    "10.0.0.38"
+                ],
+                "ip6_list": [
+                    "dc1b::0026"
+                ],
+                "sn4_list": [
+                    24
+                ],
+                "sn6_list": [
+                    64
+                ],
+                "img": "/home/yzy/aquarius/data/img/node_server_37.img",
+                "vcpu_list": [
+                    4,
+                    28,
+                    5,
+                    29,
+                    6,
+                    30,
+                    7,
+                    31
+                ],
+                "physical_server_id": 2,
+                "physical_server_ip": "v6dc-2",
+                "lb_list": [
+                    0,
+                    1
+                ],
+                "lb_ip4_list": [
+                    "10.0.0.253",
+                    "10.0.0.252"
+                ],
+                "lb_ip6_list": [
+                    "dc1b::fffe",
+                    "dc1b::fffd"
+                ],
+                "clt_list": [
+                    0
+                ],
+                "clt_ip4_list": [
+                    "10.1.0.1"
+                ],
+                "clt_ip6_list": [
+                    "c12e::0001"
+                ],
+                "vip4": "2.2.2.2",
+                "vip6": "dead::cafe"
+            },
+            {
+                "id": 38,
+                "node_type": "as",
+                "hostname": "node_server_38",
+                "isvpp": false,
+                "ssh_port": 9038,
+                "mgmt_ip": "10.0.1.39",
+                "l2_list": [
+                    "de:ad:ca:fe:ea:73",
+                    "de:ad:be:ef:52:26"
+                ],
+                "tap_list": [
+                    "asmgmt38",
+                    "asvpp38"
+                ],
+                "ip4_list": [
+                    "10.0.0.39"
+                ],
+                "ip6_list": [
+                    "dc1b::0027"
+                ],
+                "sn4_list": [
+                    24
+                ],
+                "sn6_list": [
+                    64
+                ],
+                "img": "/home/yzy/aquarius/data/img/node_server_38.img",
+                "vcpu_list": [
+                    8,
+                    32,
+                    9,
+                    33,
+                    10,
+                    34,
+                    11,
+                    35
+                ],
+                "physical_server_id": 2,
+                "physical_server_ip": "v6dc-2",
+                "lb_list": [
+                    0,
+                    1
+                ],
+                "lb_ip4_list": [
+                    "10.0.0.253",
+                    "10.0.0.252"
+                ],
+                "lb_ip6_list": [
+                    "dc1b::fffe",
+                    "dc1b::fffd"
+                ],
+                "clt_list": [
+                    0
+                ],
+                "clt_ip4_list": [
+                    "10.1.0.1"
+                ],
+                "clt_ip6_list": [
+                    "c12e::0001"
+                ],
+                "vip4": "2.2.2.2",
+                "vip6": "dead::cafe"
+            },
+            {
+                "id": 39,
+                "node_type": "as",
+                "hostname": "node_server_39",
+                "isvpp": false,
+                "ssh_port": 9039,
+                "mgmt_ip": "10.0.1.40",
+                "l2_list": [
+                    "de:ad:ca:fe:d1:c3",
+                    "de:ad:be:ef:52:27"
+                ],
+                "tap_list": [
+                    "asmgmt39",
+                    "asvpp39"
+                ],
+                "ip4_list": [
+                    "10.0.0.40"
+                ],
+                "ip6_list": [
+                    "dc1b::0028"
+                ],
+                "sn4_list": [
+                    24
+                ],
+                "sn6_list": [
+                    64
+                ],
+                "img": "/home/yzy/aquarius/data/img/node_server_39.img",
+                "vcpu_list": [
+                    12,
+                    36,
+                    13,
+                    37,
+                    14,
+                    38,
+                    15,
+                    39
+                ],
+                "physical_server_id": 2,
+                "physical_server_ip": "v6dc-2",
+                "lb_list": [
+                    0,
+                    1
+                ],
+                "lb_ip4_list": [
+                    "10.0.0.253",
+                    "10.0.0.252"
+                ],
+                "lb_ip6_list": [
+                    "dc1b::fffe",
+                    "dc1b::fffd"
+                ],
+                "clt_list": [
+                    0
+                ],
+                "clt_ip4_list": [
+                    "10.1.0.1"
+                ],
+                "clt_ip6_list": [
+                    "c12e::0001"
+                ],
+                "vip4": "2.2.2.2",
+                "vip6": "dead::cafe"
+            },
+            {
+                "id": 40,
+                "node_type": "as",
+                "hostname": "node_server_40",
+                "isvpp": false,
+                "ssh_port": 9040,
+                "mgmt_ip": "10.0.1.41",
+                "l2_list": [
+                    "de:ad:ca:fe:9e:bb",
+                    "de:ad:be:ef:52:28"
+                ],
+                "tap_list": [
+                    "asmgmt40",
+                    "asvpp40"
+                ],
+                "ip4_list": [
+                    "10.0.0.41"
+                ],
+                "ip6_list": [
+                    "dc1b::0029"
+                ],
+                "sn4_list": [
+                    24
+                ],
+                "sn6_list": [
+                    64
+                ],
+                "img": "/home/yzy/aquarius/data/img/node_server_40.img",
+                "vcpu_list": [
+                    16,
+                    40,
+                    17,
+                    41,
+                    18,
+                    42,
+                    19,
+                    43
+                ],
+                "physical_server_id": 2,
+                "physical_server_ip": "v6dc-2",
+                "lb_list": [
+                    0,
+                    1
+                ],
+                "lb_ip4_list": [
+                    "10.0.0.253",
+                    "10.0.0.252"
+                ],
+                "lb_ip6_list": [
+                    "dc1b::fffe",
+                    "dc1b::fffd"
+                ],
+                "clt_list": [
+                    0
+                ],
+                "clt_ip4_list": [
+                    "10.1.0.1"
+                ],
+                "clt_ip6_list": [
+                    "c12e::0001"
+                ],
+                "vip4": "2.2.2.2",
+                "vip6": "dead::cafe"
+            },
+            {
+                "id": 41,
+                "node_type": "as",
+                "hostname": "node_server_41",
+                "isvpp": false,
+                "ssh_port": 9041,
+                "mgmt_ip": "10.0.1.42",
+                "l2_list": [
+                    "de:ad:ca:fe:89:0a",
+                    "de:ad:be:ef:52:29"
+                ],
+                "tap_list": [
+                    "asmgmt41",
+                    "asvpp41"
+                ],
+                "ip4_list": [
+                    "10.0.0.42"
+                ],
+                "ip6_list": [
+                    "dc1b::002a"
+                ],
+                "sn4_list": [
+                    24
+                ],
+                "sn6_list": [
+                    64
+                ],
+                "img": "/home/yzy/aquarius/data/img/node_server_41.img",
+                "vcpu_list": [
+                    20,
+                    44,
+                    21,
+                    45,
+                    22,
+                    46,
+                    23,
+                    47
+                ],
+                "physical_server_id": 2,
+                "physical_server_ip": "v6dc-2",
+                "lb_list": [
+                    0,
+                    1
+                ],
+                "lb_ip4_list": [
+                    "10.0.0.253",
+                    "10.0.0.252"
+                ],
+                "lb_ip6_list": [
+                    "dc1b::fffe",
+                    "dc1b::fffd"
+                ],
+                "clt_list": [
+                    0
+                ],
+                "clt_ip4_list": [
+                    "10.1.0.1"
+                ],
+                "clt_ip6_list": [
+                    "c12e::0001"
+                ],
+                "vip4": "2.2.2.2",
+                "vip6": "dead::cafe"
+            }
+        ]
+    }
+}

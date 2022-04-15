@@ -1,0 +1,61 @@
+# Copyright(c) 2021 Cisco and / or its affiliates.
+# Licensed under the Apache License, Version 2.0 (the "License")
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#
+#     http: // www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+'''
+Run input traffic on the client VM
+'''
+import argparse
+import testbed_utils as tu
+
+PARSER = argparse.ArgumentParser(description='Start traffic on client.')
+
+
+PARSER.add_argument('-f', action='store',
+                    default='',
+                    dest='config_file',
+                    help='configuration file')
+
+PARSER.add_argument('--tr', action='store',
+                    default='wiki_600',
+                    dest='trace',
+                    help='Trace name')
+
+PARSER.add_argument('--sample', action='store',
+                    default='hour0.csv',
+                    dest='sample',
+                    help='Trace sample name')
+
+PARSER.add_argument('-m', action='store',
+                    default='aqualb',
+                    dest='method',
+                    help='LB method')
+
+PARSER.add_argument('--experiment', action='store',
+                    default='sc21',
+                    dest='experiment',
+                    help='Experiment name')
+
+
+ARGS = PARSER.parse_args()
+
+tu.init_task_info(
+    experiment=ARGS.experiment,
+    lb_method=ARGS.method,
+    trace=ARGS.trace,
+    sample=ARGS.sample,
+    cluster_config=ARGS.config_file,
+    alias=ARGS.config_file.replace('-0.json', ''),
+)
+
+# spin up all VMs
+for clt in tu.NODES['clt']:
+    clt.start_traffic()

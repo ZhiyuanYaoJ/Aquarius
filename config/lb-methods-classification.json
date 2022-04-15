@@ -1,0 +1,329 @@
+{
+    "maglev": {
+        "init_lines": [
+        ],
+        "files": [
+        ],
+        "vpp_macro": [
+        ],
+        "img_id": "maglev"
+    },
+    "ecmp": {
+        "init_lines": [
+            "sudo python3 baseline.py -v -g"
+        ],
+        "files": [
+            "baseline.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS"
+        ],
+        "img_id": "ecmp"
+    },
+    "lsq2": {
+        "init_lines": [
+            "sudo python3 baseline.py"
+        ],
+        "files": [
+            "baseline.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_LSQ2"
+        ],
+        "img_id": "lsq2"
+    },
+    "lsq": {
+        "init_lines": [
+            "sudo python3 baseline.py"
+        ],
+        "files": [
+            "baseline.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_LSQ"
+        ],
+        "img_id": "lsq"
+    },
+    "active-wcmp": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "active-wcmp-100": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g -i 0.1 & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "active-wcmp-500": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g -i 0.5 & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "active-wcmp-50": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g -i 0.05 & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "active-wcmp-150": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g -i 0.15 & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "active-wcmp-1000": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g -i 1. & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "active-wcmp-2000": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g -i 2 & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "wcmp": {
+        "init_lines": [
+            "sudo python3 weighted.py"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "hlb": {
+        "init_lines": [
+            "sudo python3.6 heuristic-ada.py & sleep 0.5"
+        ],
+        "files": [
+            "heuristic-ada.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "hlb-ada": {
+        "init_lines": [
+            "sudo python3.6 heuristic-ada.py -a & sleep 0.5"
+        ],
+        "files": [
+            "heuristic-ada.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "sed": {
+        "init_lines": [
+            "sudo python3.6 weighted.py & sleep 0.5"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight": {
+        "init_lines": [
+            "sudo python3.6 aqualight.py & sleep 0.5"
+        ],
+        "files": [
+            "aqualight.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight-50": {
+        "init_lines": [
+            "sudo python3.6 aqualight.py -i 0.05 & sleep 0.5"
+        ],
+        "files": [
+            "aqualight.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight-100": {
+        "init_lines": [
+            "sudo python3.6 aqualight.py -i 0.1 & sleep 0.5"
+        ],
+        "files": [
+            "aqualight.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight-150": {
+        "init_lines": [
+            "sudo python3.6 aqualight.py -i 0.15 & sleep 0.5"
+        ],
+        "files": [
+            "aqualight.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight-500": {
+        "init_lines": [
+            "sudo python3.6 aqualight.py -i 0.5 & sleep 0.5"
+        ],
+        "files": [
+            "aqualight.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight-1000": {
+        "init_lines": [
+            "sudo python3.6 aqualight.py -i 1. & sleep 0.5"
+        ],
+        "files": [
+            "aqualight.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight-2000": {
+        "init_lines": [
+            "sudo python3.6 aqualight.py -i 2. & sleep 0.5"
+        ],
+        "files": [
+            "aqualight.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "spotlight": {
+        "init_lines": [
+            "sudo python3.6 spotlight.py & sleep 0.5"
+        ],
+        "files": [
+            "spotlight.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "spotlight-norm": {
+        "init_lines": [
+            "sudo python3.6 spotlight.py -n & sleep 0.5"
+        ],
+        "files": [
+            "spotlight.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    }
+}

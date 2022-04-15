@@ -1,0 +1,483 @@
+{
+    "maglev": {
+        "init_lines": [
+        ],
+        "files": [
+        ],
+        "vpp_macro": [
+        ],
+        "img_id": "maglev"
+    },
+    "ecmp": {
+        "init_lines": [
+            "sudo python3 baseline.py -g"
+        ],
+        "files": [
+            "baseline.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS"
+        ],
+        "img_id": "ecmp"
+    },
+    "lsq2": {
+        "init_lines": [
+            "sudo python3 baseline.py -g"
+        ],
+        "files": [
+            "baseline.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_LSQ2"
+        ],
+        "img_id": "lsq2"
+    },
+    "lsq": {
+        "init_lines": [
+            "sudo python3 baseline.py -g"
+        ],
+        "files": [
+            "baseline.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_LSQ"
+        ],
+        "img_id": "lsq"
+    },
+    "active-wcmp": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "active-wcmp-100": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g -v -i 0.1 & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "active-wcmp-500": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g -v -i 0.5 & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "active-wcmp-50": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g -v -i 0.05 & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "active-wcmp-150": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g -v -i 0.15 & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "active-wcmp-1000": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g -v -i 1. & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "active-wcmp-2000": {
+        "init_lines": [
+            "sudo python3 weighted.py -a -g -v -i 2 & sleep 3;"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "wcmp": {
+        "init_lines": [
+            "sudo python3 weighted.py -g"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "rl-baseline": {
+        "init_lines": [
+            "sudo python3 baseline_random.py -v -g"
+        ],
+        "files": [
+            "baseline_random.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "rl"
+    },
+    "rl-sac": {
+        "init_lines": [
+            "sudo python3 sac_v2.py -v -g"
+        ],
+        "files": [
+            "sac_v2.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "rl"
+    },
+    "hlb": {
+        "init_lines": [
+            "sudo python3.6 heuristic-ada.py -v -g & sleep 0.5"
+        ],
+        "files": [
+            "heuristic-ada.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "hlb-ada": {
+        "init_lines": [
+            "sudo python3.6 heuristic-ada.py -g -a -v & sleep 0.5"
+        ],
+        "files": [
+            "heuristic-ada.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "hlb-ada2": {
+        "init_lines": [
+            "sudo python3.6 heuristic-ada.py -g -a & sleep 0.5"
+        ],
+        "files": [
+            "heuristic-ada.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED2"
+        ],
+        "img_id": "sed2"
+    },
+    "sed": {
+        "init_lines": [
+            "sudo python3.6 weighted.py -g & sleep 0.5"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "sed2": {
+        "init_lines": [
+            "sudo python3.6 weighted.py -g & sleep 0.5"
+        ],
+        "files": [
+            "weighted.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED2"
+        ],
+        "img_id": "sed2"
+    },
+    "aqualight": {
+        "init_lines": [
+            "sudo python3.6 aqualb.py -v & sleep 0.5"
+        ],
+        "files": [
+            "aqualb.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight-50": {
+        "init_lines": [
+            "sudo python3.6 aqualb.py -v -i 0.05 & sleep 0.5"
+        ],
+        "files": [
+            "aqualb.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight-100": {
+        "init_lines": [
+            "sudo python3.6 aqualb.py -v -i 0.1 & sleep 0.5"
+        ],
+        "files": [
+            "aqualb.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight-150": {
+        "init_lines": [
+            "sudo python3.6 aqualb.py -v -i 0.15 & sleep 0.5"
+        ],
+        "files": [
+            "aqualb.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight-500": {
+        "init_lines": [
+            "sudo python3.6 aqualb.py -v -i 0.5 & sleep 0.5"
+        ],
+        "files": [
+            "aqualb.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight-1000": {
+        "init_lines": [
+            "sudo python3.6 aqualb.py -v -i 1. & sleep 0.5"
+        ],
+        "files": [
+            "aqualb.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "aqualight-2000": {
+        "init_lines": [
+            "sudo python3.6 aqualb.py -v -i 2. & sleep 0.5"
+        ],
+        "files": [
+            "aqualb.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "spotlight": {
+        "init_lines": [
+            "sudo python3.6 spotlight.py -v & sleep 0.5"
+        ],
+        "files": [
+            "spotlight.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "spotlight-norm": {
+        "init_lines": [
+            "sudo python3.6 spotlight.py -v -n & sleep 0.5"
+        ],
+        "files": [
+            "spotlight.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_ALIAS",
+            "#define LB_MSG_IN"
+        ],
+        "img_id": "wcmp"
+    },
+    "rlb-sac-new": {
+        "init_lines": [
+            "mkdir /home/cisco/rl; sudo python3.6 rlb_sac.py -v & sleep 0.5"
+        ],
+        "files": [
+            "rlb_sac.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "rlb-sac-new-test": {
+        "init_lines": [
+            "mkdir /home/cisco/rl; sudo python3.6 rlb_sac.py -v -t & sleep 0.5"
+        ],
+        "files": [
+            "rlb_sac.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "rlb-sac-gru-discrete": {
+        "init_lines": [
+            "rm /home/cisco/done; mkdir /home/cisco/rl; sleep 1; sudo python3.6 sac_gru_discrete.py -v"
+        ],
+        "files": [
+            "sac_gru_discrete.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "rlb-sac-gru-discrete-test": {
+        "init_lines": [
+            "rm /home/cisco/done; mkdir /home/cisco/rl; sleep 1; sudo python3.6 sac_gru_discrete.py -v -t"
+        ],
+        "files": [
+            "sac_gru_discrete.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "rlb-iql-test": {
+        "init_lines": [
+            "rm /home/cisco/done; mkdir /home/cisco/rl; sleep 1; sudo python3.6 sac_gru_discrete.py -v -t -g"
+        ],
+        "files": [
+            "sac_gru_discrete.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "rlb-qmix": {
+        "init_lines": [
+            "rm /home/cisco/done; mkdir /home/cisco/rl; sleep 3; sudo python3.6 sac_qmix.py -v"
+        ],
+        "files": [
+            "sac_qmix.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    },
+    "rlb-qmix-test": {
+        "init_lines": [
+            "rm /home/cisco/done; mkdir /home/cisco/rl; sleep 3; sudo python3.6 sac_qmix.py -v -t"
+        ],
+        "files": [
+            "sac_qmix.py"
+        ],
+        "vpp_macro": [
+            "#define LB_STATS",
+            "#define LB_MSG_IN",
+            "#define LB_SED"
+        ],
+        "img_id": "sed"
+    }
+}
