@@ -12,7 +12,9 @@ RUN apt-get update && \
 
 COPY requirements.txt /tmp/
 
-RUN pip3 install --requirement /tmp/requirements.txt
+RUN python3 -m pip install --upgrade pip; \
+        python3 -m pip install --upgrade Pillow; \
+        python3 -m pip install --requirement /tmp/requirements.txt;
 
 RUN set -xe  \
         && echo '#!/bin/sh' > /usr/sbin/policy-rc.d  \

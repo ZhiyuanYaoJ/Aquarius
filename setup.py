@@ -61,11 +61,11 @@ filename = os.path.join(tmp_dir, "setup.sh")
 with open(filename, "w") as text_file:
     text_file.write(cmd)
 print("configuring vpp...\r")
-#subprocess_cmd("bash {}".format(filename))
+subprocess_cmd("bash {}".format(filename))
 print("configuring vpp done!")
 
 # cleanup
-#subprocess_cmd("rm -f {}".format(filename))
+subprocess_cmd("rm -f {}".format(filename))
 
 print("updating global_conf ...\r")
 # update root_dir in global_conf
