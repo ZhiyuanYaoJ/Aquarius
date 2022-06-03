@@ -1,6 +1,6 @@
 {
     "dir": {
-        "root": "/home/yzy/aquarius"
+        "root": "/opt/aquarius"
     },
     "net": {
         "as4_vip": "2.2.2.2",
@@ -19,17 +19,17 @@
         "as_mgmt_port": 9000,
         "er_mgmt_port": 8850,
         "clt_mgmt_port": 8800,
-        "bridge": "bryzy",
-        "mgmt_bridge": "bryzymgmt",
-        "vlan_if": "enp7s0",
+        "bridge": "braqua",
+        "mgmt_bridge": "braquamgmt",
+        "vlan_if": "eth0",
         "vlan_id": 0,
         "vlan_mgmt_id": 1566,
         "physical_server_ip": [
-            "kvmp-2", 
-            "kvmp-3",
+            "kvmp-2",
+            "172.17.0.2",
             "v6dc-2",
             "v6dc-3"
         ],
-        "base_ip": "kvmp-3"
+        "base_ip": "172.17.0.2"
     }
 }

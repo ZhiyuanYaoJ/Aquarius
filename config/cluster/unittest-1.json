@@ -1,15 +1,15 @@
 {
     "global": {
         "path": {
-            "root": "/home/yzy/aquarius",
-            "config": "/home/yzy/aquarius/config",
-            "src": "/home/yzy/aquarius/src",
-            "vpp": "/home/yzy/aquarius/data/vpp_deb",
-            "img": "/home/yzy/aquarius/data/img",
-            "tmp": "/home/yzy/aquarius/data/tmp",
-            "trace": "/home/yzy/aquarius/data/trace",
-            "orig_img": "/home/yzy/aquarius/data/img/origin/lb-vpp.img",
-            "base_img": "/home/yzy/aquarius/data/img/lb-vpp-base.img"
+            "root": "/opt/aquarius",
+            "config": "/opt/aquarius/config",
+            "src": "/opt/aquarius/src",
+            "vpp": "/opt/aquarius/data/vpp_deb",
+            "img": "/opt/aquarius/data/img",
+            "tmp": "/opt/aquarius/data/tmp",
+            "trace": "/opt/aquarius/data/trace",
+            "orig_img": "/opt/aquarius/data/img/origin/lb-vpp.img",
+            "base_img": "/opt/aquarius/data/img/lb-vpp-base.img"
         },
         "topo": {
             "n_node": {
@@ -139,16 +139,16 @@
             "clt_mgmt_port": 8800,
             "bridge": "bryzy",
             "mgmt_bridge": "bryzymgmt",
-            "vlan_if": "enp7s0",
+            "vlan_if": "eth0",
             "vlan_id": 0,
             "vlan_mgmt_id": 1566,
             "physical_server_ip": [
                 "kvmp-2",
-                "kvmp-3",
+                "172.17.0.2",
                 "v6dc-2",
                 "v6dc-3"
             ],
-            "base_ip": "kvmp-3"
+            "base_ip": "172.17.0.2"
         }
     },
     "nodes": {
@@ -180,7 +180,7 @@
                 "sn6_list": [
                     64
                 ],
-                "img": "/home/yzy/aquarius/data/img/node_client_0.img",
+                "img": "/opt/aquarius/data/img/node_client_0.img",
                 "vcpu_list": [
                     0,
                     24,
@@ -192,7 +192,7 @@
                     27
                 ],
                 "physical_server_id": 1,
-                "physical_server_ip": "kvmp-3",
+                "physical_server_ip": "172.17.0.2",
                 "er_list": [
                     0
                 ],
@@ -238,7 +238,7 @@
                     64,
                     64
                 ],
-                "img": "/home/yzy/aquarius/data/img/node_edge_0.img",
+                "img": "/opt/aquarius/data/img/node_edge_0.img",
                 "vcpu_list": [
                     4,
                     28,
@@ -246,7 +246,7 @@
                     29
                 ],
                 "physical_server_id": 1,
-                "physical_server_ip": "kvmp-3",
+                "physical_server_ip": "172.17.0.2",
                 "lb_list": [
                     0
                 ],
@@ -288,7 +288,7 @@
                 "sn6_list": [
                     64
                 ],
-                "img": "/home/yzy/aquarius/data/img/node_lb_0.img",
+                "img": "/opt/aquarius/data/img/node_lb_0.img",
                 "vcpu_list": [
                     6,
                     30,
@@ -296,7 +296,7 @@
                     31
                 ],
                 "physical_server_id": 1,
-                "physical_server_ip": "kvmp-3",
+                "physical_server_ip": "172.17.0.2",
                 "as_list": [
                     0,
                     1,
@@ -377,7 +377,7 @@
                 "sn6_list": [
                     64
                 ],
-                "img": "/home/yzy/aquarius/data/img/node_server_0.img",
+                "img": "/opt/aquarius/data/img/node_server_0.img",
                 "vcpu_list": [
                     8,
                     32,
@@ -385,7 +385,7 @@
                     33
                 ],
                 "physical_server_id": 1,
-                "physical_server_ip": "kvmp-3",
+                "physical_server_ip": "172.17.0.2",
                 "lb_list": [
                     0
                 ],
@@ -434,7 +434,7 @@
                 "sn6_list": [
                     64
                 ],
-                "img": "/home/yzy/aquarius/data/img/node_server_1.img",
+                "img": "/opt/aquarius/data/img/node_server_1.img",
                 "vcpu_list": [
                     10,
                     34,
@@ -442,7 +442,7 @@
                     35
                 ],
                 "physical_server_id": 1,
-                "physical_server_ip": "kvmp-3",
+                "physical_server_ip": "172.17.0.2",
                 "lb_list": [
                     0
                 ],
@@ -491,7 +491,7 @@
                 "sn6_list": [
                     64
                 ],
-                "img": "/home/yzy/aquarius/data/img/node_server_2.img",
+                "img": "/opt/aquarius/data/img/node_server_2.img",
                 "vcpu_list": [
                     12,
                     36,
@@ -503,7 +503,7 @@
                     39
                 ],
                 "physical_server_id": 1,
-                "physical_server_ip": "kvmp-3",
+                "physical_server_ip": "172.17.0.2",
                 "lb_list": [
                     0
                 ],
@@ -552,7 +552,7 @@
                 "sn6_list": [
                     64
                 ],
-                "img": "/home/yzy/aquarius/data/img/node_server_3.img",
+                "img": "/opt/aquarius/data/img/node_server_3.img",
                 "vcpu_list": [
                     16,
                     40,
@@ -564,7 +564,7 @@
                     43
                 ],
                 "physical_server_id": 1,
-                "physical_server_ip": "kvmp-3",
+                "physical_server_ip": "172.17.0.2",
                 "lb_list": [
                     0
                 ],

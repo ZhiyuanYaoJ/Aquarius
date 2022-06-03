@@ -15,7 +15,6 @@ import os
 import subprocess
 import json
 
-
 def json_write2file(data, filename):
     '''
     @brief:
@@ -25,7 +24,6 @@ def json_write2file(data, filename):
         # w/ indent the file looks better
         json.dump(data, write_file, indent=4)
 
-
 def json_read_file(filename):
     '''
     @brief:
@@ -34,38 +32,16 @@ def json_read_file(filename):
     with open(filename, "r") as read_file:
         return json.load(read_file)
 
-
-def subprocess_cmd(command):
+def subprocess_cmd(command, stdout=True):
     '''
     execute command and print out result
     '''
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-    proc_stdout = process.communicate()[0].strip()
-    return proc_stdout.decode("utf-8")
-
-tmp_dir = 'data/tmp'
-if not os.path.exists(tmp_dir):
-    os.makedirs(tmp_dir)
-
-cmd = "#!/bin/bash\n\
-cd src/vpp/base\n\
-git submodule init\n\
-git submodule update\n\
-make wipe\n\
-make wipe-release\n\
-echo y | make install-deps\n\
-echo y | make install-ext-deps\n\
-"
-
-filename = os.path.join(tmp_dir, "setup.sh")
-with open(filename, "w") as text_file:
-    text_file.write(cmd)
-print("configuring vpp...\r")
-subprocess_cmd("bash {}".format(filename))
-print("configuring vpp done!")
-
-# cleanup
-subprocess_cmd("rm -f {}".format(filename))
+    if stdout:
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+        proc_stdout = process.communicate()[0].strip()
+        return proc_stdout.decode("utf-8")
+    else:
+        process = subprocess.Popen(command, shell=True)
 
 print("updating global_conf ...\r")
 # update root_dir in global_conf
@@ -99,9 +75,3 @@ for k, v in cluster_conf['nodes'].items():
         cluster_conf['nodes'][k][i]["img"] = cluster_conf['nodes'][k][i]["img"].replace(origin_root_dir, global_conf['dir']['root'])
 json_write2file(cluster_conf, unittest_file)
 print("updating unittest-1.json done!")
-
-
-# install libraries
-cmd = 'python3 -m pip install numpy; echo y | sudo apt-get install qemu-utils uml-utilities bridge-utils qemu-system'
-res = subprocess_cmd(cmd)
-print(res)
