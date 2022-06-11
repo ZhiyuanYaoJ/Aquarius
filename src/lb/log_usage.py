@@ -11,33 +11,75 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-'''
-log LB resource usage
-'''
-
-import time
 import psutil
+import time
+import argparse
+import subprocess
+from os import path
 
-INTERVAL = 0.5
-FILENAME = 'log/usage.log'
-FILE_ = open(FILENAME, "w")
 
-T0 = time.time()
+def subprocess_cmd(command, debug=False):
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    proc_stdout = process.communicate()[0].strip()
+    if debug:
+        print('@subprocess_cmd: execute {}'.format(command))
+    return proc_stdout.decode("utf-8")
 
-# print(','.join(['ts', 'cpu_usage', 'used_ram', 'avail_ram']))
-FILE_.write(','.join(['ts', 'cpu_usage', 'used_ram', 'avail_ram'])+'\n')
-while True:
-    time.sleep(INTERVAL)
 
-    CPU_USAGE = psutil.cpu_percent() # gives a single float value
-    USED_RAM = psutil.virtual_memory().percent
-    AVAIL_RAM = psutil.virtual_memory().available * 100 / psutil.virtual_memory().total
+interval = 0.5
+filename = 'log/usage.log'
+f = open(filename, "w")
 
-    FILE_.write(','.join([
-        str(time.time()-T0),
-        '{:.3f}'.format(CPU_USAGE),
-        '{:.3f}'.format(USED_RAM),
-        '{:.3f}'.format(AVAIL_RAM)
-        ])+'\n')
 
-FILE_.close()
+parser = argparse.ArgumentParser(
+    description='Load Balance Log Usage.')
+
+parser.add_argument('-c', action='store_true',
+                    default=False,
+                    dest='clib',
+                    help='Log sys-perf w/ perfmon plugin in VPP and gather cpu-cycles for forwarding in the end')
+
+args = parser.parse_args()
+
+if args.clib:
+
+    time.sleep(5)
+
+    while True:
+
+        # gather sys-perf for 2 rounds
+        cmd = 'sudo vppctl set pmc instructions cache-references cache-misses branches branch-misses bus-cycles ref-cpu-cycles page-faults;'
+        _ = subprocess_cmd(cmd)
+        time.sleep(1)
+
+        if path.exists('done'):
+            cmd = 'sudo vppctl sh pmc verbose'
+            log_res = subprocess_cmd(cmd)
+            f.write('--- perfmon ---\n')
+            f.write(log_res+'\n')
+            cmd = 'grep -inR "@dt" /var/log/syslog'
+            log_res = subprocess_cmd(cmd)
+            f.write('--- dt ---\n')
+            f.write(log_res+'\n')
+            break
+
+    f.close()
+
+else:
+
+    t0 = time.time()
+
+    f.write(','.join(['ts', 'cpu_usage', 'used_ram', 'avail_ram'])+'\n')
+    while True:
+        time.sleep(interval)
+
+        cpu_usage = psutil.cpu_percent()  # gives a single float value
+        used_ram = psutil.virtual_memory().percent
+        avail_ram = psutil.virtual_memory().available * 100 / \
+            psutil.virtual_memory().total
+
+        f.write(','.join([str(time.time()-t0), '{:.3f}'.format(
+            cpu_usage), '{:.3f}'.format(used_ram), '{:.3f}'.format(avail_ram)])+'\n')
+        f.flush()
+
+    f.close()

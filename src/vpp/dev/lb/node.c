@@ -334,6 +334,7 @@ lb_node_fn (vlib_main_t * vm,
       while (n_left_from > 0 && n_left_to_next > 0)
         {
 #ifdef LB_DEBUG
+          u8 packet_type_hit = 1;
           CLIB_MEMORY_BARRIER();
           u64 t0 = clib_cpu_time_now();
           CLIB_MEMORY_BARRIER();
@@ -436,6 +437,9 @@ lb_node_fn (vlib_main_t * vm,
             }
           else if (PREDICT_TRUE(available_index0 != ~0))
             {
+#ifdef LB_DEBUG
+              packet_type_hit = 0;
+#endif /* LB_DEBUG */
               //There is an available slot for a new flow
               asindex0 =
                   vip0->new_flow_table[hash0 & vip0->new_flow_table_mask].as_index;
@@ -491,6 +495,10 @@ lb_node_fn (vlib_main_t * vm,
             }
           else
             {
+#ifdef LB_DEBUG
+              packet_type_hit = 2;
+#endif /* LB_DEBUG */
+
               //Could not store new entry in the table
               asindex0 =
                   vip0->new_flow_table[hash0 & vip0->new_flow_table_mask].as_index;
@@ -679,11 +687,10 @@ lb_node_fn (vlib_main_t * vm,
               vm, node, next_index, to_next, n_left_to_next, pi0, next0);
 
 #ifdef LB_DEBUG
-          // count CPU cycles
           CLIB_MEMORY_BARRIER();
           u64 t1 = clib_cpu_time_now();
           CLIB_MEMORY_BARRIER();
-          clib_warning("@dt = %lu", t1 - t0);
+          clib_warning("@dt = %lu|%u", t1 - t0, packet_type_hit);
 #endif /* LB_DEBUG */
         }
       vlib_put_next_frame (vm, node, next_index, n_left_to_next);

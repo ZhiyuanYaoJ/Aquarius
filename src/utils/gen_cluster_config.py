@@ -68,8 +68,8 @@ class PathConfig(object):
         self.tmp = os.path.join(data_dir, 'tmp')  # tmp folder
         self.trace = os.path.join(data_dir, 'trace')  # wiki replay folder
         # original image file
-        self.orig_img = os.path.join(self.img, 'origin', 'lb-vpp.img')
-        self.base_img = os.path.join(self.img, 'lb-vpp-base.img')  # base image file
+        self.orig_img = os.path.join(self.img, 'origin.img')
+        self.base_img = os.path.join(self.img, 'base.img')  # base image file
 
 
 class TopoConfig(object):
@@ -80,19 +80,19 @@ class TopoConfig(object):
                 'clt': 1,
                 'er': 1,
                 'lb': 1,
-                'as': 4,
+                'as': 6,
             },
             n_vcpu={
-                'clt': [4],
+                'clt': [2],
                 'er': [2],
                 'lb': [2],
-                'as': [2]*2+[4]*2,
+                'as': [2]*3+[4]*3,
             },
             physical_server_id={
                 'clt': [1],
                 'er': [1],
                 'lb': [1],
-                'as': [1]*4,
+                'as': [1]*6,
             },
             thread_per_cpu=2,
             n_cpu=24,
@@ -152,10 +152,6 @@ class NetConfig(object):
                  clt_mgmt_port,  # client node management (ssh) port baseline
                  bridge,       # name of the bridge that links all lbs and servers
                  mgmt_bridge,  # name of the management bridge that links all lbs and servers
-                 vlan_if,  # name of the interface for VLAN
-                 vlan_id,  # id of the interface for VLAN
-                 vlan_mgmt_id,  # id of the interface for VLAN
-                 physical_server_ip,  # ip list of physical server
                  base_ip,  # ip of the base physical server on which results are gathered
                  ):
         self.__dict__.update(
@@ -202,7 +198,6 @@ class NodeConfig(object):
                  sn4_list=None,  # node ip v4 subnet (default 24 for all ip)
                  ip6_list=None,  # node ip v6
                  sn6_list=None,  # node ip v6 subnet (default 64 for all ip)
-                 physical_server_id=0,  # id of the physical server
                  ):
         # check variable
         if ip4_list:
@@ -245,7 +240,6 @@ class NodeConfig(object):
             {k: v for k, v in locals().items() if k != 'self'})
         self.img = os.path.join(GLOBAL_CONF.path.img, self.hostname + '.img')
 
-        self.physical_server_ip = GLOBAL_CONF.net.physical_server_ip[physical_server_id]
 
         assert len(self.tap_list) == len(
             self.l2_list), 'Number of tap interfaces should be equal to number of L2 addresses + 1!'
@@ -258,8 +252,7 @@ class NodeConfig(object):
         '''get all the keys'''
         return ('id', 'node_type', 'hostname', 'isvpp', 'ssh_port',
                 'mgmt_ip', 'l2_list', 'tap_list', 'ip4_list', 'ip6_list',
-                'sn4_list', 'sn6_list', 'img', 'vcpu_list',
-                'physical_server_id', 'physical_server_ip')
+                'sn4_list', 'sn6_list', 'img', 'vcpu_list')
 
 
 class LB_Config(NodeConfig):
@@ -314,8 +307,7 @@ class LB_Config(NodeConfig):
                              '1b', lb_id),
                          ip4_list=net_conf.tap4_fmt.format(v4_id),
                          ip6_list=net_conf.tap6_fmt.format(v6_id),
-                         vcpu_list=GLOBAL_CONF.topo.vcpu_list['lb'][lb_id],
-                         physical_server_id=GLOBAL_CONF.topo.physical_server_id['lb'][lb_id],
+                         vcpu_list=GLOBAL_CONF.topo.vcpu_list['lb'][lb_id]
                         )
 
     def keys(self):
@@ -369,8 +361,7 @@ class AS_Config(NodeConfig):
                              v4_id),
                          ip6_list=net_conf.tap6_fmt.format(
                              v6_id),
-                         vcpu_list=GLOBAL_CONF.topo.vcpu_list['as'][as_id],
-                         physical_server_id=GLOBAL_CONF.topo.physical_server_id['as'][as_id],
+                         vcpu_list=GLOBAL_CONF.topo.vcpu_list['as'][as_id]
                          )
 
     def keys(self):
@@ -414,7 +405,6 @@ class ER_Config(NodeConfig):
                          ip6_list=[net_conf.tap6_fmt.format(
                              v6_id), net_conf.clt6_fmt.format(v6_id)],
                          vcpu_list=GLOBAL_CONF.topo.vcpu_list['er'][er_id],
-                         physical_server_id=GLOBAL_CONF.topo.physical_server_id['er'][er_id],
                          )
 
     def keys(self):
@@ -457,9 +447,7 @@ class CLT_Config(NodeConfig):
                              v4_id),
                          ip6_list=net_conf.clt6_fmt.format(
                              v6_id),
-                         vcpu_list=GLOBAL_CONF.topo.vcpu_list['clt'][clt_id],
-                         physical_server_id=GLOBAL_CONF.topo.physical_server_id[
-                             'clt'][clt_id],
+                         vcpu_list=GLOBAL_CONF.topo.vcpu_list['clt'][clt_id]
                          )
 
     def keys(self):
@@ -472,7 +460,7 @@ class CLT_Config(NodeConfig):
 if __name__ == '__main__':
 
     TOPO_CONF = {}
-    FILENAME = "unittest-"
+    FILENAME = "sc-ae"
 
     GLOBAL_CONF = GlobalConfig(
         common.COMMON_CONF["dir"]["root"],
@@ -480,27 +468,17 @@ if __name__ == '__main__':
         common.COMMON_CONF["net"]
     )
 
-    N_SERVER = len(GLOBAL_CONF.net.physical_server_ip)
-
-    # make sure that all vms are within the pool of physical server ips
-    for k in NODE_TYPES:
-        assert(set(GLOBAL_CONF.to_dict()[
-               'topo']['physical_server_id'][k]) - set(range(N_SERVER)) == set())
-
     # get node config
-    NODE_CONF = {i: {k: [] for k in NODE_TYPES} for i in range(N_SERVER)}
+    NODE_CONF = {k: [] for k in NODE_TYPES}
     for node_type in NODE_TYPES:
         exec("for i in range(GLOBAL_CONF.topo.n_node['{0}']): \
-NODE_CONF[GLOBAL_CONF.topo.physical_server_id['{0}'][i]]['{0}']\
+NODE_CONF['{0}']\
 .append(dict({1}_Config(i)))".format(node_type, node_type.upper()))
 
     # put all config together
-    for i in range(N_SERVER):
-        if NODE_CONF[i] == {k: [] for k in NODE_TYPES}:
-            continue
-        config_output = {
-            'global': GLOBAL_CONF.to_dict(),
-            'nodes': NODE_CONF[i]
-        }
-        common.json_write2file(config_output, os.path.join(
-            GLOBAL_CONF.path.config, 'cluster', FILENAME+'{}.json'.format(i)))
+    config_output = {
+        'global': GLOBAL_CONF.to_dict(),
+        'nodes': NODE_CONF
+    }
+    common.json_write2file(config_output, os.path.join(
+        GLOBAL_CONF.path.config, 'cluster', FILENAME+'.json'))

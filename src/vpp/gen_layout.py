@@ -29,11 +29,6 @@ PARSER.add_argument('-m', action='store',
                     dest='method',
                     help='Load Balancing Method')
 
-PARSER.add_argument('-dn', action='store_true',
-                    default=False,
-                    dest='debug_node',
-                    help='Set True if clib_warning in node.c should be seen')
-
 PARSER.add_argument('--version', action='version',
                     version='%(prog)s 1.0')
 
@@ -112,9 +107,6 @@ if __name__ == '__main__':
         if var != value_[-1]:
             lines[-1] += "\\"
     lines.append("")
-
-    if ARGS.debug_node:
-        lines.append("#define LB_DEBUG_NODE")
 
     common.write_file(lines, os.path.join(
         common.COMMON_CONF['dir']['root'],

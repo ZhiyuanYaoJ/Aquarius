@@ -60,7 +60,7 @@ tu.init_task_info(
     alias=ARGS.config_file.replace('-0.json', ''),
 )
 
-tu.prepare_img(lb_method=ARGS.method, from_orig=None, debug_node=False)
+tu.prepare_img(lb_method=ARGS.method, from_orig=None)
 
 # spin up all VMs
 tu.runall()

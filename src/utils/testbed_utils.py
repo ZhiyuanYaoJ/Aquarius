@@ -184,37 +184,18 @@ def br_up():
     setup bridge if needed
     '''
 
-    def if_up():
-        # setup 802.1q mode and necessary interfaces for bridge
-        cmd = "sudo modprobe 8021q;\
-        sudo ifconfig {0} up;\
-        sudo vconfig add {0} {1};\
-        sudo ifconfig {0}.{1} up;\
-        sudo vconfig add {0} {2};\
-        sudo ifconfig {0}.{2} up;".format(
-            common.COMMON_CONF["net"]["vlan_if"],
-            common.COMMON_CONF["net"]["vlan_id"],
-            common.COMMON_CONF["net"]["vlan_mgmt_id"]
-        )
-        subprocess_cmd(cmd)
     bridge = CONFIG['global']['net']['bridge']
     mgmt_bridge = CONFIG['global']['net']['mgmt_bridge']
-    if_up()
     # if the bridge does not exists
     if ~os.path.isfile(os.path.join("/sys/devices/virtual/net", bridge)):
         cmd = "sudo brctl addbr {0};\
         sudo brctl setageing {0} 9999999;\
         sudo ifconfig {0} up;\
-        sudo brctl addif {0} {2}.{3};\
         sudo brctl addbr {1};\
         sudo brctl setageing {1} 9999999;\
-        sudo ifconfig {1} up;\
-        sudo brctl addif {1} {2}.{4};".format(
+        sudo ifconfig {1} up;".format(
             bridge,
-            mgmt_bridge,
-            common.COMMON_CONF["net"]["vlan_if"],
-            common.COMMON_CONF["net"]["vlan_id"],
-            common.COMMON_CONF["net"]["vlan_mgmt_id"])
+            mgmt_bridge)
         subprocess_cmd(cmd)
 
 
@@ -222,46 +203,25 @@ def br_down():
     '''
     tear down bridge
     '''
-    def if_down():
-        '''
-        setup 802.1q mode and necessary interfaces for bridge
-        '''
-        cmd = "sudo ifconfig {0} down;\
-        sudo ifconfig {0}.{1} down;\
-        sudo ip link del {0}.{1};\
-        sudo ifconfig {0}.{2} down;\
-        sudo ip link del {0}.{2};".format(
-            common.COMMON_CONF["net"]["vlan_if"],
-            common.COMMON_CONF["net"]["vlan_id"],
-            common.COMMON_CONF["net"]["vlan_mgmt_id"])
-        subprocess_cmd(cmd)
     bridge = CONFIG['global']['net']['bridge']
     mgmt_bridge = CONFIG['global']['net']['mgmt_bridge']
-    cmd = "ls /sys/devices/virtual/net/{}/brif | grep -q -v {}.{}".format(
+    cmd = "sudo brctl delif {0};\
+    sudo ifconfig {0} down;\
+    sudo brctl delbr {0};\
+    sudo brctl delif {1};\
+    sudo ifconfig {1} down;\
+    sudo brctl delbr {1};".format(
         bridge,
-        common.COMMON_CONF["net"]["vlan_if"],
-        common.COMMON_CONF["net"]["vlan_id"])
-    if not subprocess_cmd(cmd):
-        cmd = "sudo brctl delif {0} {2}.{3};\
-        sudo ifconfig {0} down;\
-        sudo brctl delbr {0};\
-        sudo brctl delif {1} {2}.{4};\
-        sudo ifconfig {1} down;\
-        sudo brctl delbr {1};".format(
-            bridge,
-            mgmt_bridge,
-            common.COMMON_CONF["net"]["vlan_if"],
-            common.COMMON_CONF["net"]["vlan_id"],
-            common.COMMON_CONF["net"]["vlan_mgmt_id"])
-        subprocess_cmd(cmd)
-        if_down()
+        mgmt_bridge)
+    subprocess_cmd(cmd)
 
 
 def pin_qemu(port, *argv):
     '''
     pin qemu thread who queries cpu to single cpu
+    @note: nc -q
     '''
-    cmd = 'TIDS=$( cat {}/utils/qemu.exe | nc -q 0 localhost {}  2>&1 | tee tmp.txt > /dev/null & sleep 0.1;\
+    cmd = 'TIDS=$( cat {}/utils/qemu.exe | nc -q 1 localhost {}  2>&1 | tee tmp.txt > /dev/null & sleep 0.1;\
  cat tmp.txt | tail -n 1 | jq -r ".return[].thread_id");\
 rm -f tmp.txt;\
 echo $TIDS;'.format(CONFIG['global']['path']['src'], port)
@@ -343,44 +303,6 @@ make pkg-deb\n\
         print(">> Install vpp done!")
 
 
-def pip_install_base():
-    '''
-    pip install in base image
-    '''
-    if VERBOSE:
-        print(">> pip install...")
-    cmd = "#!/bin/bash\n\
-sudo chroot {}/ /bin/bash << EOF\n\
-pip install psutil gym torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html\n\
-exit\n\
-EOF".format(LOOP_DIR)
-
-    filename = os.path.join(CONFIG['global']['path']['tmp'], "install_pip.sh")
-    with open(filename, "w") as text_file:
-        text_file.write(cmd)
-
-    subprocess_cmd("sudo chmod +x {}".format(filename))
-    subprocess_cmd("sudo {}".format(filename))
-    subprocess_cmd("sudo rm -f {}".format(filename))
-    if VERBOSE:
-        print(">> Install pip done!")
-
-
-def install_vpp_plugin(plugin_list, vpp_dir):
-    '''
-    move vpp plugin files to base image
-    '''
-    if VERBOSE:
-        print(">> Install vpp plugins...", end='\r')
-    # uncomment the following line if you want to clean up stale plugins from .deb
-#     subprocess_cmd("sudo rm {}/usr/lib/vpp_plugins/srlb_*.so".format(LOOP_DIR))
-    for plugin in plugin_list:
-        copy_files(os.path.join(vpp_dir, "{}_plugin.so".format(plugin)),
-                   os.path.join(LOOP_DIR, "usr/lib/vpp_plugins"))
-    if VERBOSE:
-        print(">> Install vpp plugins done!")
-
-
 def create_base_image():
     '''
     - mount base image
@@ -396,7 +318,7 @@ def create_base_image():
     # mount base image
     mount_new_image(CONFIG['global']['path']['orig_img'],
                     CONFIG['global']['path']['base_img'].replace(
-                        'lb-', common.LB_METHODS[LB_METHOD]['img_id']+'-'))
+                        'base', common.LB_METHODS[LB_METHOD]['img_id']+'-base'))
     # copy vpp debs
     copy_files(os.path.join(CONFIG['global']['path']['vpp'], '*.deb'),
                os.path.join(LOOP_DIR, "home/cisco/"))
@@ -419,8 +341,6 @@ def create_base_image():
     # remove deb files
     cmd = "sudo rm {}/home/cisco/*.deb".format(LOOP_DIR)
     subprocess_cmd(cmd)
-    # install tensorflow, psutil
-    pip_install_base()
     # cleanup
     umount_image()
 
@@ -443,7 +363,7 @@ class Node():
         '''
         umount_image()  # make sure there is no mounted image
         mount_new_image(CONFIG['global']['path']['base_img'].replace(
-            'lb-', common.LB_METHODS[LB_METHOD]['img_id']+'-'), self.img)
+            'base', common.LB_METHODS[LB_METHOD]['img_id']+'-base'), self.img)
 
     def mount_image(self):
         '''
@@ -478,7 +398,7 @@ class Node():
 
     def create_folder_ssh(self, folder_dir):
         '''create a folder via ssh'''
-        cmd = "ssh -t -t -i ~/.ssh/lb_rsa cisco@localhost -p {} \"sudo mkdir {}\"".format(
+        cmd = "ssh -t -t -i ~/.ssh/id_rsa cisco@localhost -p {} \"sudo mkdir {}\"".format(
             self.ssh_port, folder_dir)
         subprocess_cmd(cmd)
 
@@ -490,7 +410,7 @@ class Node():
             attach = '-a '
         else:
             attach = ''
-        cmd = 'ssh -t -t -i ~/.ssh/lb_rsa cisco@localhost -p {} \
+        cmd = 'ssh -t -t -i ~/.ssh/id_rsa cisco@localhost -p {} \
                "echo \'{}\' | sudo tee {}{} > /dev/null"'.format(
                    self.ssh_port,
                    content,
@@ -503,13 +423,13 @@ class Node():
         r_placeholder = ' '
         if isfolder:
             r_placeholder = ' -r '
-        cmd = 'scp -i ~/.ssh/lb_rsa -oStrictHostKeyChecking=no -P {}{}{} cisco@{}:{} ;'.format(
-            self.ssh_port, r_placeholder, src, self.physical_server_ip, '~/{}'.format(dst))
+        cmd = 'scp -i ~/.ssh/id_rsa -oStrictHostKeyChecking=no -P {}{}{} cisco@localhost:{} ;'.format(
+            self.ssh_port, r_placeholder, src, '~/{}'.format(dst))
         subprocess_cmd(cmd)
 
     def execute_cmd_ssh(self, cmd):
         '''execute cmd locally via ssh'''
-        cmd = 'ssh -t -t -i ~/.ssh/lb_rsa cisco@localhost -p {} "{}"'.format(
+        cmd = 'ssh -t -t -i ~/.ssh/id_rsa cisco@localhost -p {} "{}"'.format(
             self.ssh_port,
             cmd)
         subprocess_cmd(cmd)
@@ -725,10 +645,14 @@ lb as {1}/64 {2}\n\n\
         # create a folder to store some other results
         super().create_folder('/home/cisco/log')
 
-    def gather_usage(self):
+    def gather_usage(self, clib_log=False):
         '''collect node resource usage with log_usage.py'''
-        cmd = 'ssh -t -p {} cisco@localhost "sudo python3 log_usage.py &"'.format(
-            self.ssh_port)
+        if clib_log:
+            cmd = 'ssh -t -p {} cisco@localhost "sudo python3 log_usage.py -c &"'.format(
+                self.ssh_port)
+        else:
+            cmd = 'ssh -t -p {} cisco@localhost "sudo python3 log_usage.py &"'.format(
+                self.ssh_port)
         subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
 
     def gt_socket_check(self, n_server):
@@ -741,10 +665,10 @@ lb as {1}/64 {2}\n\n\
         else:
             return []
 
-    def run_init_bg(self):
-        '''run init.sh script in the background'''
-        self.gather_usage()
-        cmd = 'ssh -n -f cisco@localhost -p {} "sh -c \'cd ~/; nohup ./init.sh &\'" &'.format(
+    def run_init_bg(self, gather_usage=True, clib_log=False):
+        if gather_usage:
+            self.gather_usage(clib_log=clib_log)
+        cmd = 'ssh -t -p {} cisco@localhost "bash init.sh"'.format(
             self.ssh_port)
         subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
 
@@ -758,9 +682,9 @@ lb as {1}/64 {2}\n\n\
         r_placeholder = ' '
         if isfolder:
             r_placeholder = ' -r '
-        cmd = 'scp -i ~/.ssh/lb_rsa -oStrictHostKeyChecking=no -P {0}{1}cisco@{5}:~/{3} \
-{2}/{4}_{3}_ep{6};'.format(
-    self.ssh_port, r_placeholder, dir_, filename, self.id, self.physical_server_ip, episode)
+        cmd = 'scp -i ~/.ssh/id_rsa -oStrictHostKeyChecking=no -P {0}{1}cisco@localhost:~/{3} \
+{2}/{4}_{3}_ep{5};'.format(
+    self.ssh_port, r_placeholder, dir_, filename, self.id, episode)
         subprocess_cmd(cmd)
 
     def bootstrap(self):
@@ -928,7 +852,7 @@ trace.csv > trace.log"'.format(self.ssh_port)
         @patams:
             dir: directory to store file
         '''
-        cmd = 'scp -i ~/.ssh/lb_rsa -oStrictHostKeyChecking=no -P {} \
+        cmd = 'scp -i ~/.ssh/id_rsa -oStrictHostKeyChecking=no -P {} \
 cisco@localhost:~/trace.log {}/trace.log;'.format(
     self.ssh_port, dir_)
         subprocess_cmd(cmd)
@@ -1216,7 +1140,7 @@ def init_task_info(
 #--- Pipeline ---#
 
 
-def prepare_img(lb_method, from_orig=None, debug_node=False):
+def prepare_img(lb_method, from_orig=None):
     '''
     @brief:
         prepare all the image files
@@ -1227,11 +1151,11 @@ def prepare_img(lb_method, from_orig=None, debug_node=False):
 
     assert lb_method in common.LB_METHODS.keys()
     root_dir = common.COMMON_CONF['dir']['root']
-    vpp_dir = os.path.join(root_dir, 'src', 'vpp', 'base')
+    vpp_dir = os.path.join('/', 'root', 'vpp')
 
     if from_orig is None:  # if `from_orig` is not specified here
         if os.path.exists(CONFIG['global']['path']['base_img'].replace(
-                'lb-', common.LB_METHODS[lb_method]['img_id']+'-')):
+                'base', common.LB_METHODS[lb_method]['img_id']+'-base')):
             from_orig = False
         else:
             from_orig = True
@@ -1241,8 +1165,6 @@ def prepare_img(lb_method, from_orig=None, debug_node=False):
         # build vpp
         cmd = 'python3 {} -m {}'.format(os.path.join(root_dir,
                                                      'src', 'vpp', 'gen_layout.py'), lb_method)
-        if debug_node:
-            cmd += ' -dn'
         subprocess_cmd(cmd)
         # copy generated lb files to vpp folder
         cmd = 'cp -r {} {}/src/plugins/'.format(
@@ -1277,11 +1199,9 @@ def prepare_trace_sample(trace, sample, clip_n=None):
         return
     NODES['clt'][0].copy_file_scp(sample_file_dir, "sample.csv")
     if clip_n:
-        cmd = 'ssh -t -t -i ~/.ssh/lb_rsa cisco@{} -p 8800 "head -n {} sample.csv > trace.csv;\
-rm -f sample.csv"'.format(
-    NODES['clt'][0].physical_server_ip, clip_n)
+        cmd = 'ssh -t -t -i ~/.ssh/id_rsa cisco@localhost -p 8800 "head -n {} sample.csv > trace.csv;\
+rm -f sample.csv"'.format(clip_n)
         subprocess_cmd(cmd)
     else:
-        cmd = 'ssh -t -t -i ~/.ssh/lb_rsa cisco@{} -p 8800 "mv sample.csv trace.csv"'.format(
-            NODES['clt'][0].physical_server_ip)
+        cmd = 'ssh -t -t -i ~/.ssh/id_rsa cisco@localhost -p 8800 "mv sample.csv trace.csv"'
         subprocess_cmd(cmd)

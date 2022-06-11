@@ -19,17 +19,8 @@
         "as_mgmt_port": 9000,
         "er_mgmt_port": 8850,
         "clt_mgmt_port": 8800,
-        "bridge": "braqua",
-        "mgmt_bridge": "braquamgmt",
-        "vlan_if": "eth0",
-        "vlan_id": 0,
-        "vlan_mgmt_id": 1566,
-        "physical_server_ip": [
-            "kvmp-2",
-            "172.17.0.2",
-            "v6dc-2",
-            "v6dc-3"
-        ],
+        "bridge": "br-sc",
+        "mgmt_bridge": "br-sc-mgmt",
         "base_ip": "172.17.0.2"
     }
 }

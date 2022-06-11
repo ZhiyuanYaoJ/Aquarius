@@ -181,7 +181,8 @@ class LoadBalanceEnv(gym.Env):
             calculate reward based on the fairness of recent reservoir
             observation (flow duration avg)
         '''
-        active_as, _, feature_as = obs
+        print("DEBUG: len(obs)=", len(obs))
+        active_as, _, feature_as, _ = obs
         # use negative reservoir_flow_duration_avg_decay times their
         # corresponding AS weights (weighted average) as reward for now
         previous_active_as = [i for i, v in enumerate(action) if v > 0]
@@ -204,10 +205,6 @@ class LoadBalanceEnv(gym.Env):
 
             # option 1: current overprovision
             reward = overprovision
-
-            # option 2: difference between current overprovision and
-            #             last evaluated reward
-            # reward = overprovision - self.log['overprovision'][-1]
 
             self.log['overprovision'].append(overprovision)
         else:

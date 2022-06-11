@@ -291,7 +291,6 @@ lb_node_fn (vlib_main_t * vm,
           u8 packet_type_hit = 1;
           CLIB_MEMORY_BARRIER();
           u64 t0 = clib_cpu_time_now();
-          // f64 t1_f = vlib_time_now(vm);
           CLIB_MEMORY_BARRIER();
 #endif /* LB_DEBUG */
 
@@ -652,7 +651,6 @@ lb_node_fn (vlib_main_t * vm,
 #ifdef LB_DEBUG
           CLIB_MEMORY_BARRIER();
           u64 t1 = clib_cpu_time_now();
-          // f64 t1_f = vlib_time_now(vm);
           CLIB_MEMORY_BARRIER();
           clib_warning("@dt = %lu|%u", t1-t0, packet_type_hit);
 #endif /* LB_DEBUG */

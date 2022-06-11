@@ -1,22 +1,51 @@
 LOCAL_DIR=$(shell pwd)
 DOCKER_REPO=zhiyuanyaoj
-PROJECT=aquarius-sc22
+PROJECT=aquarius
 DOCKER_IMAGE=${DOCKER_REPO}/${PROJECT}:latest
+WORK_DIR=/opt/aquarius
 
-.PHONY: build build-origin
+.PHONY: build-docker, build-origin, run
 
-build:
-	docker pull ${DOCKER_REPO}/${PROJECT}:latest
+build-docker:
+	docker build \
+		-t ${DOCKER_IMAGE} \
+		-f build/Dockerfile \
+		.
 
 build-origin:
-	docker pull ${DOCKER_REPO}/research:latest; \
+	docker pull ${DOCKER_REPO}/${PROJECT}:base;
+	docker pull ${DOCKER_REPO}/${PROJECT}:img;
+	docker run -it --name ${PROJECT}-img -d ${DOCKER_REPO}/${PROJECT}:img /bin/bash;
+	docker cp ${PROJECT}-img:/opt/img/origin.img data/img/origin.img;
+	docker stop ${PROJECT}-img; docker rm ${PROJECT}-img;
 	docker build --no-cache \
 		-t ${DOCKER_IMAGE} \
 		-f build/Dockerfile \
 		.
-	
+
 run: ## Run container
-	sudo docker run -it --rm -p 8888:8888 -v $(LOCAL_DIR):/opt/aquarius --name $(PROJECT) zhiyuanyaoj/aquarius-sc22:latest jupyter notebook --no-browser /opt/aquarius --allow-root --ip 0.0.0.0
+	sudo docker run -it \
+		--name $(PROJECT) \
+		-p 8888:8888 \
+		--privileged \
+		--cap-add=ALL -d \
+		-v $(LOCAL_DIR):$(WORK_DIR) \
+		-v /dev:/dev \
+		-v /sys/bus:/sys/bus \
+		${DOCKER_IMAGE} \
+		jupyter notebook --no-browser $(WORK_DIR) --allow-root --ip 0.0.0.0
+
+docker-run-unittest:
+	python3 src/test/test_pipeline.py;
+	/usr/bin/reset
+
+docker-clean:
+	python3 src/test/test_shut_all.py
+	rm -rf data/results/unittest;
+
+clean: stop
+	docker rmi ${DOCKER_REPO}/${PROJECT}:img;
+	rm -rf data/results/unittest;
 
 stop: ## Stop and remove a running container
 	docker stop $(PROJECT); docker rm $(PROJECT)
