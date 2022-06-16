@@ -13,7 +13,7 @@ import testbed_utils as tu
 # Initialise parameters and configurations for the testbed.
 
 
-config = 'sc-ae'
+config = 'unittest'
 method = 'ecmp-microbench-all'
 trace = 'wiki'
 sample = 'hour0.csv'
@@ -64,10 +64,14 @@ t0 = time.time()
 tu.NODES['clt'][0].start_traffic()
 print("total time: {:.3f}s".format(time.time()-t0))
 
-
-# # Fetch results
+# Fetch results
 #
 # Once the network traffic is done, gather measurements and logs from both the load balancer node and the client node.
+
+for lb in tu.NODES['lb']:
+    lb.execute_cmd_ssh("touch /home/cisco/done")
+
+time.sleep(8)
 
 for lb in tu.NODES['lb']:
     lb.fetch_result(task_dir, ep)
@@ -77,6 +81,5 @@ tu.NODES['clt'][0].fetch_result(task_dir, ep)
 
 # # Cleanup
 # Once the test finished, cleanup the environment.
-
 
 tu.shutall()

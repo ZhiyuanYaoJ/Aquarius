@@ -4,8 +4,8 @@ sys.path.insert(0, utils_dir)  # add utils dir to path
 import testbed_utils as tu
 
 # initialize params
-config = 'sc-ae'
-method = 'maglev'
+config = 'unittest'
+method = 'ecmp-microbench-all'
 trace = 'wiki'
 sample = 'hour0.csv'
 ep = 0

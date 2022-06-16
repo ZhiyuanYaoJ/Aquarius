@@ -12,29 +12,9 @@
             "base_img": "/opt/aquarius/data/img/base.img"
         },
         "topo": {
-            "n_node": {
-                "clt": 1,
-                "er": 1,
-                "lb": 1,
-                "as": 4
-            },
-            "n_vcpu": {
-                "clt": [
-                    4
-                ],
-                "er": [
-                    2
-                ],
-                "lb": [
-                    2
-                ],
-                "as": [
-                    2,
-                    2,
-                    4,
-                    4
-                ]
-            },
+            "n_server": 4,
+            "n_cpu": 24,
+            "thread_per_cpu": 2,
             "physical_server_id": {
                 "clt": [
                     1
@@ -49,26 +29,54 @@
                     1,
                     1,
                     1,
+                    1,
+                    1,
                     1
                 ]
             },
-            "thread_per_cpu": 2,
-            "n_cpu": 24,
-            "n_server": 4,
+            "n_vcpu": {
+                "clt": [
+                    2
+                ],
+                "er": [
+                    2
+                ],
+                "lb": [
+                    2
+                ],
+                "as": [
+                    2,
+                    2,
+                    2,
+                    4,
+                    4,
+                    4
+                ]
+            },
+            "n_node": {
+                "clt": 1,
+                "er": 1,
+                "lb": 1,
+                "as": 6
+            },
             "vcpu_list": {
                 "clt": [
                     [
                         0,
                         24,
                         1,
-                        25,
+                        25
+                    ]
+                ],
+                "er": [
+                    [
                         2,
                         26,
                         3,
                         27
                     ]
                 ],
-                "er": [
+                "lb": [
                     [
                         4,
                         28,
@@ -76,15 +84,13 @@
                         29
                     ]
                 ],
-                "lb": [
+                "as": [
                     [
                         6,
                         30,
                         7,
                         31
-                    ]
-                ],
-                "as": [
+                    ],
                     [
                         8,
                         32,
@@ -116,30 +122,40 @@
                         42,
                         19,
                         43
+                    ],
+                    [
+                        20,
+                        44,
+                        21,
+                        45,
+                        22,
+                        46,
+                        23,
+                        47
                     ]
                 ]
             }
         },
         "net": {
-            "as4_vip": "2.2.2.2",
-            "as6_vip": "dead::cafe",
-            "lb4_vip_fmt": "3.3.{}.1",
-            "lb6_vip_fmt": "dead:{:04x}::beef",
-            "br4_fmt": "192.168.0.{}",
-            "br6_fmt": "dcb6::{:04x}",
-            "tap4_fmt": "10.0.0.{}",
-            "tap6_fmt": "dc1b::{:04x}",
-            "clt4_fmt": "10.1.0.{}",
-            "clt6_fmt": "c12e::{:04x}",
-            "l2_fmt": "de:ad:be:ef:{}:{:02x}",
-            "mgmt_fmt": "10.0.1.{}",
-            "lb_mgmt_port": 8900,
-            "as_mgmt_port": 9000,
-            "er_mgmt_port": 8850,
-            "clt_mgmt_port": 8800,
-            "bridge": "br-sc",
+            "base_ip": "172.17.0.2",
             "mgmt_bridge": "br-sc-mgmt",
-            "base_ip": "172.17.0.2"
+            "bridge": "br-sc",
+            "clt_mgmt_port": 8800,
+            "er_mgmt_port": 8850,
+            "as_mgmt_port": 9000,
+            "lb_mgmt_port": 8900,
+            "mgmt_fmt": "10.0.1.{}",
+            "l2_fmt": "de:ad:be:ef:{}:{:02x}",
+            "clt6_fmt": "c12e::{:04x}",
+            "clt4_fmt": "10.1.0.{}",
+            "tap6_fmt": "dc1b::{:04x}",
+            "tap4_fmt": "10.0.0.{}",
+            "br6_fmt": "dcb6::{:04x}",
+            "br4_fmt": "192.168.0.{}",
+            "lb6_vip_fmt": "dead:{:04x}::beef",
+            "lb4_vip_fmt": "3.3.{}.1",
+            "as6_vip": "dead::cafe",
+            "as4_vip": "2.2.2.2"
         }
     },
     "nodes": {
@@ -152,7 +168,7 @@
                 "ssh_port": 8800,
                 "mgmt_ip": "10.0.1.100",
                 "l2_list": [
-                    "de:ad:ca:fe:49:24",
+                    "de:ad:ca:fe:4a:ff",
                     "de:ad:be:ef:ce:00"
                 ],
                 "tap_list": [
@@ -176,14 +192,8 @@
                     0,
                     24,
                     1,
-                    25,
-                    2,
-                    26,
-                    3,
-                    27
+                    25
                 ],
-                "physical_server_id": 1,
-                "physical_server_ip": "172.17.0.2",
                 "er_list": [
                     0
                 ],
@@ -206,7 +216,7 @@
                 "ssh_port": 8850,
                 "mgmt_ip": "10.0.1.254",
                 "l2_list": [
-                    "de:ad:ca:fe:fb:e6",
+                    "de:ad:ca:fe:b9:41",
                     "de:ad:be:ef:e6:00"
                 ],
                 "tap_list": [
@@ -231,13 +241,11 @@
                 ],
                 "img": "/opt/aquarius/data/img/node_edge_0.img",
                 "vcpu_list": [
-                    4,
-                    28,
-                    5,
-                    29
+                    2,
+                    26,
+                    3,
+                    27
                 ],
-                "physical_server_id": 1,
-                "physical_server_ip": "172.17.0.2",
                 "lb_list": [
                     0
                 ],
@@ -260,7 +268,7 @@
                 "ssh_port": 8900,
                 "mgmt_ip": "10.0.1.253",
                 "l2_list": [
-                    "de:ad:ca:fe:75:ef",
+                    "de:ad:ca:fe:04:f3",
                     "de:ad:be:ef:1b:00"
                 ],
                 "tap_list": [
@@ -281,42 +289,50 @@
                 ],
                 "img": "/opt/aquarius/data/img/node_lb_0.img",
                 "vcpu_list": [
-                    6,
-                    30,
-                    7,
-                    31
+                    4,
+                    28,
+                    5,
+                    29
                 ],
-                "physical_server_id": 1,
-                "physical_server_ip": "172.17.0.2",
                 "as_list": [
                     0,
                     1,
                     2,
-                    3
+                    3,
+                    4,
+                    5
                 ],
                 "as_ip4_list": [
                     "10.0.0.1",
                     "10.0.0.2",
                     "10.0.0.3",
-                    "10.0.0.4"
+                    "10.0.0.4",
+                    "10.0.0.5",
+                    "10.0.0.6"
                 ],
                 "as_ip6_list": [
                     "dc1b::0001",
                     "dc1b::0002",
                     "dc1b::0003",
-                    "dc1b::0004"
+                    "dc1b::0004",
+                    "dc1b::0005",
+                    "dc1b::0006"
                 ],
                 "gre4_list": [
                     "3.3.1.1",
                     "3.3.2.1",
                     "3.3.3.1",
-                    "3.3.4.1"
+                    "3.3.4.1",
+                    "3.3.5.1",
+                    "3.3.6.1"
                 ],
                 "gre6_list": [
                     "dead:0001::beef",
                     "dead:0002::beef",
                     "dead:0003::beef",
-                    "dead:0004::beef"
+                    "dead:0004::beef",
+                    "dead:0005::beef",
+                    "dead:0006::beef"
                 ],
                 "vip4": "2.2.2.2",
                 "vip6": "dead::cafe",
@@ -349,7 +365,7 @@
                 "ssh_port": 9000,
                 "mgmt_ip": "10.0.1.1",
                 "l2_list": [
-                    "de:ad:ca:fe:56:05",
+                    "de:ad:ca:fe:ab:a7",
                     "de:ad:be:ef:52:00"
                 ],
                 "tap_list": [
@@ -370,13 +386,11 @@
                 ],
                 "img": "/opt/aquarius/data/img/node_server_0.img",
                 "vcpu_list": [
-                    8,
-                    32,
-                    9,
-                    33
+                    6,
+                    30,
+                    7,
+                    31
                 ],
-                "physical_server_id": 1,
-                "physical_server_ip": "172.17.0.2",
                 "lb_list": [
                     0
                 ],
@@ -406,7 +420,7 @@
                 "ssh_port": 9001,
                 "mgmt_ip": "10.0.1.2",
                 "l2_list": [
-                    "de:ad:ca:fe:e6:d9",
+                    "de:ad:ca:fe:99:b2",
                     "de:ad:be:ef:52:01"
                 ],
                 "tap_list": [
@@ -427,13 +441,11 @@
                 ],
                 "img": "/opt/aquarius/data/img/node_server_1.img",
                 "vcpu_list": [
-                    10,
-                    34,
-                    11,
-                    35
+                    8,
+                    32,
+                    9,
+                    33
                 ],
-                "physical_server_id": 1,
-                "physical_server_ip": "172.17.0.2",
                 "lb_list": [
                     0
                 ],
@@ -463,7 +475,7 @@
                 "ssh_port": 9002,
                 "mgmt_ip": "10.0.1.3",
                 "l2_list": [
-                    "de:ad:ca:fe:25:94",
+                    "de:ad:ca:fe:6d:24",
                     "de:ad:be:ef:52:02"
                 ],
                 "tap_list": [
@@ -484,17 +496,11 @@
                 ],
                 "img": "/opt/aquarius/data/img/node_server_2.img",
                 "vcpu_list": [
-                    12,
-                    36,
-                    13,
-                    37,
-                    14,
-                    38,
-                    15,
-                    39
+                    10,
+                    34,
+                    11,
+                    35
                 ],
-                "physical_server_id": 1,
-                "physical_server_ip": "172.17.0.2",
                 "lb_list": [
                     0
                 ],
@@ -524,7 +530,7 @@
                 "ssh_port": 9003,
                 "mgmt_ip": "10.0.1.4",
                 "l2_list": [
-                    "de:ad:ca:fe:19:99",
+                    "de:ad:ca:fe:41:9f",
                     "de:ad:be:ef:52:03"
                 ],
                 "tap_list": [
@@ -545,6 +551,65 @@
                 ],
                 "img": "/opt/aquarius/data/img/node_server_3.img",
                 "vcpu_list": [
+                    12,
+                    36,
+                    13,
+                    37,
+                    14,
+                    38,
+                    15,
+                    39
+                ],
+                "lb_list": [
+                    0
+                ],
+                "lb_ip4_list": [
+                    "10.0.0.253"
+                ],
+                "lb_ip6_list": [
+                    "dc1b::fffe"
+                ],
+                "clt_list": [
+                    0
+                ],
+                "clt_ip4_list": [
+                    "10.1.0.1"
+                ],
+                "clt_ip6_list": [
+                    "c12e::0001"
+                ],
+                "vip4": "2.2.2.2",
+                "vip6": "dead::cafe"
+            },
+            {
+                "id": 4,
+                "node_type": "as",
+                "hostname": "node_server_4",
+                "isvpp": false,
+                "ssh_port": 9004,
+                "mgmt_ip": "10.0.1.5",
+                "l2_list": [
+                    "de:ad:ca:fe:11:ce",
+                    "de:ad:be:ef:52:04"
+                ],
+                "tap_list": [
+                    "asmgmt4",
+                    "asvpp4"
+                ],
+                "ip4_list": [
+                    "10.0.0.5"
+                ],
+                "ip6_list": [
+                    "dc1b::0005"
+                ],
+                "sn4_list": [
+                    24
+                ],
+                "sn6_list": [
+                    64
+                ],
+                "img": "/opt/aquarius/data/img/node_server_4.img",
+                "vcpu_list": [
                     16,
                     40,
                     17,
@@ -554,8 +619,65 @@
                     19,
                     43
                 ],
-                "physical_server_id": 1,
-                "physical_server_ip": "172.17.0.2",
+                "lb_list": [
+                    0
+                ],
+                "lb_ip4_list": [
+                    "10.0.0.253"
+                ],
+                "lb_ip6_list": [
+                    "dc1b::fffe"
+                ],
+                "clt_list": [
+                    0
+                ],
+                "clt_ip4_list": [
+                    "10.1.0.1"
+                ],
+                "clt_ip6_list": [
+                    "c12e::0001"
+                ],
+                "vip4": "2.2.2.2",
+                "vip6": "dead::cafe"
+            },
+            {
+                "id": 5,
+                "node_type": "as",
+                "hostname": "node_server_5",
+                "isvpp": false,
+                "ssh_port": 9005,
+                "mgmt_ip": "10.0.1.6",
+                "l2_list": [
+                    "de:ad:ca:fe:1a:e1",
+                    "de:ad:be:ef:52:05"
+                ],
+                "tap_list": [
+                    "asmgmt5",
+                    "asvpp5"
+                ],
+                "ip4_list": [
+                    "10.0.0.6"
+                ],
+                "ip6_list": [
+                    "dc1b::0006"
+                ],
+                "sn4_list": [
+                    24
+                ],
+                "sn6_list": [
+                    64
+                ],
+                "img": "/opt/aquarius/data/img/node_server_5.img",
+                "vcpu_list": [
+                    20,
+                    44,
+                    21,
+                    45,
+                    22,
+                    46,
+                    23,
+                    47
+                ],
                 "lb_list": [
                     0
                 ],

@@ -427,12 +427,15 @@ class Node():
             self.ssh_port, r_placeholder, src, '~/{}'.format(dst))
         subprocess_cmd(cmd)
 
-    def execute_cmd_ssh(self, cmd):
+    def execute_cmd_ssh(self, cmd, shell=False):
         '''execute cmd locally via ssh'''
         cmd = 'ssh -t -t -i ~/.ssh/id_rsa cisco@localhost -p {} "{}"'.format(
             self.ssh_port,
             cmd)
-        subprocess_cmd(cmd)
+        if shell:
+            return subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=shell)
+        else:
+            return subprocess_cmd(cmd)
 
 
     def update_files_univ(self):
@@ -573,7 +576,7 @@ server,nowait -m 4096 -drive file={1},cache=writeback,if=virtio {2}".format(
 
     def poweroff(self):
         '''poweroff the vm'''
-        cmd = 'ssh -t cisco@localhost -p {} "sudo poweroff" 2> /dev/null'.format(
+        cmd = 'ssh -i ~/.ssh/id_rsa -oStrictHostKeyChecking=no -t cisco@localhost -p {} "sudo poweroff" 2> /dev/null'.format(
             self.ssh_port)
         subprocess_cmd(cmd)
 
@@ -648,12 +651,12 @@ lb as {1}/64 {2}\n\n\
     def gather_usage(self, clib_log=False):
         '''collect node resource usage with log_usage.py'''
         if clib_log:
-            cmd = 'ssh -t -p {} cisco@localhost "sudo python3 log_usage.py -c &"'.format(
-                self.ssh_port)
+            # cmd = 'ssh -t -p {} cisco@localhost "sudo python3 log_usage.py -c &"'.format(
+            #     self.ssh_port)
+            cmd = "sudo python3 log_usage.py -c"
         else:
-            cmd = 'ssh -t -p {} cisco@localhost "sudo python3 log_usage.py &"'.format(
-                self.ssh_port)
-        subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+            cmd = 'sudo python3 log_usage.py'
+        self.execute_cmd_ssh(cmd, shell=True)
 
     def gt_socket_check(self, n_server):
         '''run init.sh script in the background'''

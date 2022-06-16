@@ -1,7 +1,7 @@
 FROM zhiyuanyaoj/aquarius:base
 
 LABEL maintainer="Zhiyuan Yao <zhiyuan.yao@polytechnique.edu>"
-ARG PROJECT=aquarius-sc22
+ARG PROJECT=aquarius
 ARG PROJECT_DIR=/opt/$PROJECT
 ARG HOME=/root
 
@@ -13,7 +13,7 @@ RUN apt-get update && \
         apt-get install -y $(cat /tmp/pkglist) && \
         rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt /tmp/
+COPY build/requirements.txt /tmp/
 
 RUN python3 -m pip install --requirement /tmp/requirements.txt
 

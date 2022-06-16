@@ -33,7 +33,7 @@ For the sake of reproducibility, software and data artifacts for performance eva
 
 ## Workflow
 
-To build and prepare the environment:
+To build and prepare the environment (takes about 0.5-1h):
 
 ```bash
 $ sudo make build-origin
@@ -56,6 +56,8 @@ To run a unit-test in the container:
 ```bash
 root@aquarius:/opt/aquarius# make docker-run-unittest
 ```
+
+To check the results and make some plots, check the jupyter notebook in a browser at `http://localhost:8888/notebooks/notebook/reproduce-origin/classification/reproduce.ipynb` (or do a port forwarding if necessary).
 
 To cleanup the environment and close the container:
 
